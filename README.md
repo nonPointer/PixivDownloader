@@ -4,8 +4,9 @@
 
 TODO:
 
-+ [ ] optimize code
-+ [ ] tag filter
++ [ ] Optimize code
++ [ ] Tag filter
++ [ ] Built-in proxy settings
 
 # English
 
