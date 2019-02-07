@@ -37,7 +37,7 @@ PixivDownloader 是一个基于 Python3 的 Pixiv 用户作品多线程批量下
 
 ## 使用方法
 
-1. 在文件中填入自己的 Cookies （**用于下载限制级内容**）
+1. 在文件中填入自己的 Cookies （**可选：用于下载限制级内容**）
 2. 执行脚本
 3. 输入作者的用户 ID （`https://www.pixiv.net/member.php?id=[作者ID]`，作者主页地址的 `id` 参数即为作者用户 ID）
 4. 等待 `Job finished` 提示然后输入下一个作者的用户 ID
