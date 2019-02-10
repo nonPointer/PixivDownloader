@@ -22,11 +22,31 @@ authorPrefix = "https://www.pixiv.net/ajax/user/"
 authorSuffix = "/profile/all"
 
 # Cookies
-# Sample: "yuid_b=xxxx; first_visit_datetime_pc=xxxxxx;"
+# Use ";" to split each term
 cookies = ""
 
 # Threads per second
 threads_per_sec = 10
+
+# Enable Remote DNS Resolve via Proxies
+enable_remote_dns = True
+
+# Proxies Settings
+socks5_proxy_address = "127.0.0.1"
+socks5_proxy_port = "1080"
+
+
+if enable_remote_dns:
+    proxiesDict = {
+        'http': "socks5h://" + socks5_proxy_address + ":" + socks5_proxy_port,
+        'https': "socks5h://" + socks5_proxy_address + ":" + socks5_proxy_port
+    }
+else:
+    proxiesDict = {
+        'http': "socks5://" + socks5_proxy_address + ":" + socks5_proxy_port,
+        'https': "socks5://" + socks5_proxy_address + ":" + socks5_proxy_port
+    }
+
 
 def print_log(content):
     print(time.strftime('%Y-%m-%d %H:%M:%S\t', time.localtime(time.time())) + content)
@@ -50,7 +70,7 @@ def mkdir(path):
 
 def work(illust_id):
     try:
-        contentJSON = requests.get(apiAddress + illust_id, headers=headers)
+        contentJSON = requests.get(apiAddress + illust_id, headers=headers, proxies=proxiesDict)
         decodeContent = json.loads(contentJSON.text)
         if decodeContent['error'] == True:
             print_log("Illustration error.")
@@ -65,7 +85,7 @@ def work(illust_id):
                     'cookie': cookies
                 }
 
-                content = requests.get(decodeContent['body']['urls']['original'], headers=headers1)
+                content = requests.get(decodeContent['body']['urls']['original'], headers=headers1, proxies=proxiesDict)
                 f = open(foldername + "\\" + illust_id + ".png", "wb")
                 f.write(content.content)
                 f.close()
@@ -85,7 +105,7 @@ if __name__ == "__main__":
     while True:
         # Fetch thumb list
         author_id = str(input()).strip().strip("\n")
-        contentJSON = requests.get(authorPrefix + author_id + authorSuffix, headers=headers)
+        contentJSON = requests.get(authorPrefix + author_id + authorSuffix, headers=headers, proxies=proxiesDict)
         decodeContent = json.loads(contentJSON.text)
 
         # Regex Match
@@ -103,7 +123,7 @@ if __name__ == "__main__":
             try:
                 foldername = re.findall("<title>「(.*)」.*</title>",
                                         requests.get("https://www.pixiv.net/member.php?id=" + author_id,
-                                                     headers=headers).text)[0]
+                                                     headers=headers, proxies=proxiesDict).text)[0]
             except:
                 foldername = author_id
 
