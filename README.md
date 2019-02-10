@@ -6,7 +6,7 @@ TODO:
 
 + [ ] Optimize code
 + [ ] Tag filter
-+ [ ] Built-in proxy settings
++ [X] Built-in proxy settings
 
 # English
 
