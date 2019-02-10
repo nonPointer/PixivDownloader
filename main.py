@@ -28,24 +28,29 @@ cookies = ""
 # Threads per second
 threads_per_sec = 10
 
+# Enable Proxy
+enable_proxy = False
+
 # Enable Remote DNS Resolve via Proxies
 enable_remote_dns = True
 
-# Proxies Settings
+# Proxy Settings
 socks5_proxy_address = "127.0.0.1"
 socks5_proxy_port = "1080"
 
-
-if enable_remote_dns:
-    proxiesDict = {
-        'http': "socks5h://" + socks5_proxy_address + ":" + socks5_proxy_port,
-        'https': "socks5h://" + socks5_proxy_address + ":" + socks5_proxy_port
-    }
+if not enable_proxy:
+    proxiesDict = {}
 else:
-    proxiesDict = {
-        'http': "socks5://" + socks5_proxy_address + ":" + socks5_proxy_port,
-        'https': "socks5://" + socks5_proxy_address + ":" + socks5_proxy_port
-    }
+    if enable_remote_dns:
+        proxiesDict = {
+            'http': "socks5h://" + socks5_proxy_address + ":" + socks5_proxy_port,
+            'https': "socks5h://" + socks5_proxy_address + ":" + socks5_proxy_port
+        }
+    else:
+        proxiesDict = {
+            'http': "socks5://" + socks5_proxy_address + ":" + socks5_proxy_port,
+            'https': "socks5://" + socks5_proxy_address + ":" + socks5_proxy_port
+        }
 
 
 def print_log(content):
