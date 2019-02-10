@@ -120,7 +120,7 @@ if __name__ == "__main__":
             continue
         print_log("Counter\t" + str(len(illusts)))
 
-        print_log(str(decodeContent))
+        # print_log(str(decodeContent))
 
         try:
             foldername = re.findall("'userName': '(.*)', 'userImageUrl'", str(decodeContent['body']['pickup']))[0]
